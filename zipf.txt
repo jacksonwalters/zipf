@@ -1,0 +1,5 @@
+Viewing the relevant destinations as nodes (city_1, city_2, ... city_i, ..., city_n), the probability to transition from city_1 to city_2 as p_12, ..., p_ij, ..., p_nn (the transition matrix), we can write down a Markov-chain model where each step in the process is viewed as unit of time t_1, ... , t_max.
+
+Picture a network of cities on a map with the transition probabilities labeling the edges.
+
+We can solve for this process by diagonalizing the matrix. The eigenvalues will tell you how fast things are changing, and the long term behavior will show that places with high quantities tend to attract resources from places with less resources. The idea for setting this up came from the game slither.io.
