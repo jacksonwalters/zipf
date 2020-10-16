@@ -7,7 +7,7 @@ import random
 import matplotlib.pyplot as plt
 
 #number of quantities
-n=5000
+n=1000
 
 #inital quantities as integers
 Q_0 = [random.randint(0,1000) for i in range(n)]
@@ -43,4 +43,10 @@ quants=list(Q(100))
 quants.sort()
 quants.reverse()
 plt.plot(quants)
+
+Q_0.sort()
+Q_0.reverse()
+plt.plot(Q_0)
+
 plt.show()
+plt.clf()
