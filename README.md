@@ -29,15 +29,15 @@ p_ij = 1/d_ij.
 
 CASE II (SEMI-STATIC): p_ij depends on time, but is constant on intervals where the order of the
 populations is constant. That is, we only care whether the population (Q_i) of one city is greater than another,
-not by how much (which is changing with time, Q_i = Q_i(t)).
+not by how much.
 
 Let boole(statement) = {0 if statement is False, 1 if statement is True}. Then
 
-p_ij = boole(Q_i-Q_j > 0)/d_ij
+p_ij = boole(Q_j-Q_i > 0)/d_ij
 
 CASE III (DYNAMIC): pi_j depends on both the population difference and the distance between cities,
 
-p_ij = (Q_i - Q_j)/d_ij
+p_ij = (Q_j - Q_i)/d_ij, if Q_i < Q_j, else 0.
 
 SETTING UP THE MARKOV CHAIN:
 ----------------------------
@@ -55,22 +55,60 @@ Q_i(t_r+1) = Q_i(t_r) + sum_k Q_i(t_r)*p_ki - sum_k Q_i(t_r)*p_ik
 Since p_ij represent probabilities, we require that the outgoing row sum
 sum_k p_ik = 1. Simplifying, get a linear system:
 
-Q_i(t_r+1) = sum_k Q_i(t_r)*p_ki
+Q_i(t_r+1) = sum_k Q_k(t_r)*p_ki
 
 In matrix notation,
 
-Q(t_r+1) = Q(t_r)*P = ... = Q(t_0)*P^r
+Q(t_r+1) = Q(t_r)P = ... = Q(t_0)P^r
 
 STATIC, DISCRETE CASE:
 
 P is constant and only depends on the distances, d_ij. We can solve for this
-process by diagonalizing the probability transition matrixP. The eigenvalues
+process by diagonalizing the probability transition matrix P. The eigenvalues
 will give the rates, and the limit as t or r -> infty will give the steady
 state.
 
 SEMI-STATIC, DISCRETE CASE:
 
 P is piecewise constant, only depending on the order of Q. We just need to find
-times t where a transposition, or swap, in the order of quantities is occuring.
+times t* where a transposition, or swap, in the order of quantities is occurring.
+When there is such a change, we get a new transition matrix P*. To solve, construct
+a piecewise solution.
 
 DYNAMIC, DISCRETE:
+
+Here P depends on the differences Q_i-Q_j, which depend on time. The general
+recurrence reads
+
+Q(t_r+1) = Q(t_r)P(t_r) = ... = Q(0) P(t_0)P(t_1)...P(t_r)
+
+To solve, one can just compute and multiply the matrices at each time step.
+
+In the simplest case when p_ij = (Q_j-Q_i), if Q_i < Q_j, 0 otherwise one could
+potentially plug into the recurrence to get
+
+Q_i(t_r+1) = sum_k Q_k(t_r)*(Q_j(t_r) - Q_i(t_r))
+
+and actually solve the quadratic recurrences to obtain an exact solution.
+
+STATIC, CONTINUOUS:
+
+To get the continuous Markov chain, we rearrange to obtain
+
+Q_i(t_r+1) - Q_i(t_r) = sum_k Q_k*p_ki
+
+which, when t_r+1 - t_r is very small, we can write in matrix form as
+
+dQ(t)/dt = Q(t)(P - I_n)
+
+where I_n is the nxn identity matrix. A solution is given by
+
+Q(t) = Q(0)exp(t(P-I_n))
+
+SEMI-STATIC, CONTINUOUS:
+
+Same solution as static case, but piecewise whenever P changes.
+
+DYNAMIC, CONTINUOUS:
+
+Equations for Q_i(t) become quadratic differential equations.
