@@ -1,12 +1,14 @@
-#rigorous Markov chain model demonstrating Zipf's law
+This is a rigorous mathematical model of Zipf's law which using
+a Markov chain in which transition probabilities are constructed
+to reflect the motto "the rich get richer".
 
 Zipf's "law" is a rank-frequency distribution which
 which occurs in various settings, e.g. for a large
 corpus of natural language text, count the number of times each
 word occurs (its frequency, f), and order by this
 value to obtain an index (the rank, k), and plot f vs. k.
-this data is well approximated by a power law f(k)=1/k^s
-normalizing to get a probability distribution, we get
+this data is well approximated by a power law f(k)=1/k^s.
+Normalizing to get a probability distribution, we get
 f(k)=1/(H_N,S * k^s) where H_N,s is the N-th generalized
 harmonic number sum_{n=1}^{N} 1/n^s where N is the number
 of words in the corpus. in the limit as N -> infty, this
