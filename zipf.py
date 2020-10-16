@@ -7,7 +7,7 @@ import random
 import matplotlib.pyplot as plt
 
 #number of quantities
-n=100
+n=1000
 
 #inital quantities as integers
 Q_0 = [random.randint(0,1000) for i in range(n)]
