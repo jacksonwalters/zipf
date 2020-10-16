@@ -45,9 +45,32 @@ SETTING UP THE MARKOV CHAIN:
 Since p_ij is the probability of a transition/move from city_i to city_j, the amount of people
 we expect to move out of city_i and into city_j is Q_i*p_ij.
 
+DISCRETE:
+
 That is, we need to sum over all incoming (+) and outgoing (-) cities/nodes to get
 the total population change between times t_r and t_r+1:
 
-Q_i(t_r+1) = Q_i(t_r) + sum_k Q_k(t_r)*p_ki - sum_k Q_i(t_r)*p_ik
+Q_i(t_r+1) = Q_i(t_r) + sum_k Q_i(t_r)*p_ki - sum_k Q_i(t_r)*p_ik
 
-We can solve for this process by diagonalizing the matrix. The eigenvalues will tell you how fast things are changing, and the long term behavior will show that places with large quantities tend to attract resources from places with less resources.
+Since p_ij represent probabilities, we require that the outgoing row sum
+sum_k p_ik = 1. Simplifying, get a linear system:
+
+Q_i(t_r+1) = sum_k Q_i(t_r)*p_ki
+
+In matrix notation,
+
+Q(t_r+1) = Q(t_r)*P = ... = Q(t_0)*P^r
+
+STATIC, DISCRETE CASE:
+
+P is constant and only depends on the distances, d_ij. We can solve for this
+process by diagonalizing the probability transition matrixP. The eigenvalues
+will give the rates, and the limit as t or r -> infty will give the steady
+state.
+
+SEMI-STATIC, DISCRETE CASE:
+
+P is piecewise constant, only depending on the order of Q. We just need to find
+times t where a transposition, or swap, in the order of quantities is occuring.
+
+DYNAMIC, DISCRETE:
