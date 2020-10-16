@@ -2,12 +2,12 @@
 
 import math
 import numpy as np
-import scipy
+from scipy.linalg import expm
 import random
 import matplotlib.pyplot as plt
 
 #number of quantities
-n=10
+n=100
 
 #inital quantities as integers
 Q_0 = [random.randint(0,1000) for i in range(n)]
@@ -16,16 +16,36 @@ Q_0 = [random.randint(0,1000) for i in range(n)]
 x = [(100*random.random(),100*random.random()) for i in range(n)]
 d = [[math.dist(x[i],x[j]) for j in range(n)] for i in range(n)]
 
-#show plot of distances between nodes
-plt.scatter(*zip(*x))
-plt.show()
-
-#STATIC, CONTINUOUS CASE
+#STATIC CASE
 #transition probabilities are given by p_ij = 1/d_ij where d_ij
-#is the distance from node i to node j. normalized so that row sums
-#(outgoing) are 1
+#is the distance from node i to node j.
 p = [[(1/math.dist(x[i],x[j]) if i != j else 0) for j in range(n)] for i in range(n)]
 row_sum = [sum(row) for row in p]
-p = [[p[i][j]/row_sum[i] for j in range(n)] for i in range(n)]
+#normalize so that row sums (outgoing) are 1
+p = np.array([[p[i][j]/row_sum[i] for j in range(n)] for i in range(n)])
+#make sure row sums are 1 within numerical error
+for row in p:
+    assert(sum(row) - 1 < 10**-9)
 
-print([sum(row) for row in p])
+#compute eigenvalues, eigenvectors, and stationary distribution
+eig_val, eig_vec = np.linalg.eig(p)
+pi = eig_vec[0]/sum(eig_vec[0])
+
+print("Eigenvalues of p:\n",eig_val)
+print("Eigenvectors of p:\n",eig_vec)
+print("Inital distribution:\n",Q_0)
+print("Stationary distribution:\n",pi)
+
+#for cont. case, subtract 1 from diagonal to get zero row sum
+#to get stochastic matrix
+A = p - np.identity(n)
+
+#to solve, simply exponentiate the matrix
+def Q(t):
+    return np.matmul(Q_0,expm(t*A))
+
+quants=list(Q(100))
+quants.sort()
+quants.reverse()
+plt.plot(quants)
+plt.show()
