@@ -7,7 +7,7 @@ import random
 import matplotlib.pyplot as plt
 
 #number of quantities
-n=1000
+n=5000
 
 #inital quantities as integers
 Q_0 = [random.randint(0,1000) for i in range(n)]
@@ -30,11 +30,6 @@ for row in p:
 #compute eigenvalues, eigenvectors, and stationary distribution
 eig_val, eig_vec = np.linalg.eig(p)
 pi = eig_vec[0]/sum(eig_vec[0])
-
-print("Eigenvalues of p:\n",eig_val)
-print("Eigenvectors of p:\n",eig_vec)
-print("Inital distribution:\n",Q_0)
-print("Stationary distribution:\n",pi)
 
 #for cont. case, subtract 1 from diagonal to get zero row sum
 #to get stochastic matrix
