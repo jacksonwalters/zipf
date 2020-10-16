@@ -31,16 +31,21 @@ not by how much (which is changing with time, Q_i = Q_i(t)).
 
 Let boole(statement) = {0 if statement is False, 1 if statement is True}. Then
 
-p_ij = boole(Q_i > Q_j)/d_ij
+p_ij = boole(Q_i-Q_j > 0)/d_ij
 
 CASE III (DYNAMIC): pi_j depends on both the population difference and the distance between cities,
 
 p_ij = (Q_i - Q_j)/d_ij
 
+SETTING UP THE MARKOV CHAIN:
+----------------------------
 
 Since p_ij is the probability of a transition/move from city_i to city_j, the amount of people
 we expect to move out of city_i and into city_j is Q_i*p_ij.
 
+That is, we need to sum over all incoming (+) and outgoing (-) cities/nodes to get
+the total population change between times t_r and t_r+1:
 
+Q_i(t_r+1) = Q_i(t_r) + sum_k Q_k(t_r)*p_ki - sum_k Q_i(t_r)*p_ik
 
 We can solve for this process by diagonalizing the matrix. The eigenvalues will tell you how fast things are changing, and the long term behavior will show that places with large quantities tend to attract resources from places with less resources.
