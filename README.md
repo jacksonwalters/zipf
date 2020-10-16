@@ -1,4 +1,4 @@
-#zipf's law model
+#rigorous Markov chain model demonstrating Zipf's law
 
 Zipf's "law" is a rank-frequency distribution which
 which occurs in various settings, e.g. for a large
@@ -26,19 +26,21 @@ CASE I (STATIC): p_ij does not depend on time. A person is more likely to move t
 p_ij = 1/d_ij.
 
 CASE II (SEMI-STATIC): p_ij depends on time, but is constant on intervals where the order of the
-populations is constant. That is, we only care whether the population of one city is greater than another,
-not by how much (which is changing with time).
+populations is constant. That is, we only care whether the population (Q_i) of one city is greater than another,
+not by how much (which is changing with time, Q_i = Q_i(t)).
 
 Let boole(statement) = {0 if statement is False, 1 if statement is True}. Then
 
 p_ij = boole(Q_i > Q_j)/d_ij
 
-CASE III (DYNAMIC): pi_j depends on both the population difference and the distance between cities.
+CASE III (DYNAMIC): pi_j depends on both the population difference and the distance between cities,
 
-p_ij =
+p_ij = (Q_i - Q_j)/d_ij
+
+
+Since p_ij is the probability of a transition/move from city_i to city_j, the amount of people
+we expect to move out of city_i and into city_j is Q_i*p_ij.
 
 
 
-We can solve for this process by diagonalizing the matrix. The eigenvalues will tell you how fast things are changing, and the long term behavior will show that places with high quantities tend to attract resources from places with less resources. The idea for setting this up came from the game slither.io.
-
-A rigorous Markov chain model demonstrating Zipf's law.
+We can solve for this process by diagonalizing the matrix. The eigenvalues will tell you how fast things are changing, and the long term behavior will show that places with large quantities tend to attract resources from places with less resources.
