@@ -56,13 +56,20 @@ def Q(t):
     if t < len(q):
         return q[t]
 
-#sort list in ascending order to get rank-freq. dist
-quantities=sorted(list(Q(10))).reverse()
-plt.plot(quantities)
+#plot the initial distribution for reference
+init=list(Q(0))
+init.sort(reverse=True)
+plt.plot(init)
 
 #plot the initial distribution for reference
-init=sorted(list(q[0])).reverse()
+init=list(Q(5))
+init.sort(reverse=True)
 plt.plot(init)
+
+#sort list in ascending order to get rank-freq. dist
+quantities=list(Q(10))
+quantities.sort(reverse=True)
+plt.plot(quantities)
 
 plt.show()
 plt.clf()

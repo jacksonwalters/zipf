@@ -32,23 +32,30 @@ P = np.array([[P[i][j]/row_sum[i] for j in range(n)] for i in range(n)])
 for row in P:
     assert(sum(row) - 1 < 10**-9)
 
-#compute eigenvalues, eigenvectors, and stationary distribution
-eig_val, eig_vec = np.linalg.eig(P)
-pi = eig_vec[0]/sum(eig_vec[0])
-
 #for cont. case, subtract 1 from diagonal to stochastic matrix A
-#exponentiate to obtain solution
 def Q(t):
     A = P - np.identity(n)
     return np.matmul(q[0],expm(t*A))
 
-#sort list in ascending order to get rank-freq. dist
-quantities=sorted(list(Q(100))).reverse()
-plt.plot(quantities)
+#compute eigenvalues, eigenvectors, and stationary distribution
+eig_val, eig_vec = np.linalg.eig(P)
+pi = eig_vec[0]/sum(eig_vec[0])
 
 #plot the initial distribution for reference
-init=sorted(q[0]).reverse()
+init=list(Q(0))
+init.sort(reverse=True)
 plt.plot(init)
+
+#plot at t=5
+init=list(Q(5))
+init.sort(reverse=True)
+plt.plot(init)
+
+#sort list in ascending order to get rank-freq. dist
+quantities=list(Q(10))
+quantities.sort(reverse=True)
+plt.plot(quantities)
+
 
 plt.show()
 plt.clf()
