@@ -1,3 +1,4 @@
+#STATIC CASE
 #implementation of a Markov chain model demonstrating Zipf's law
 
 import math
@@ -16,7 +17,6 @@ Q_0 = [random.randint(0,1000) for i in range(n)]
 x = [(100*random.random(),100*random.random()) for i in range(n)]
 d = [[math.dist(x[i],x[j]) for j in range(n)] for i in range(n)]
 
-#STATIC CASE
 #transition probabilities are given by p_ij = 1/d_ij where d_ij
 #is the distance from node i to node j.
 p = [[(1/math.dist(x[i],x[j]) if i != j else 0) for j in range(n)] for i in range(n)]
@@ -39,14 +39,13 @@ A = p - np.identity(n)
 def Q(t):
     return np.matmul(Q_0,expm(t*A))
 
-quants=list(Q(100))
-quants.sort()
-quants.reverse()
-plt.plot(quants)
+#sort list in ascending order to get rank-freq. dist
+quantities=sorted(list(Q(100))).reverse()
+plt.plot(quantities)
 
-Q_0.sort()
-Q_0.reverse()
-plt.plot(Q_0)
+#plot the initial distribution for reference
+init=sorted(Q_0).reverse()
+plt.plot(init)
 
 plt.show()
 plt.clf()
