@@ -47,7 +47,7 @@ quantities=sorted(list(Q(100))).reverse()
 plt.plot(quantities)
 
 #plot the initial distribution for reference
-init=sorted(Q_0).reverse()
+init=sorted(q[0]).reverse()
 plt.plot(init)
 
 plt.show()
