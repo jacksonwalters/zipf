@@ -9,10 +9,12 @@ from scipy.linalg import expm
 import random
 import matplotlib.pyplot as plt
 
-n=1000  #number of quantities
-max_quant=100   #maximum quantity
-grid_size=100   #max x,y in location grid/map
-p_ii = 10   #diagonal determines proportion of quantity "held"
+#number of quantities
+n=1000
+max_quant=100
+grid_size=100
+p_ii=10
+
 
 #inital quantities as integers
 q = [np.array([random.randint(0,max_quant) for i in range(n)])]
@@ -24,7 +26,8 @@ d = [[math.dist(x[i],x[j]) for j in range(n)] for i in range(n)]
 #transition probabilities are given by p_ij = 1/d_ij where d_ij
 #is the distance from node i to node j.
 def p(i,j,t):
-    return bool(q[t][i]-q[t][j] < 0)/math.dist(x[i],x[j]) if i != j else p_ii
+    #diagonal element p_ii determines proportion of quantity "held"
+    return (q[t][i]-q[t][j])/math.dist(x[i],x[j]) if i != j else p_ii
 def P(t):
     #probabilities at time t
     P_t = [[p(i,j,t) for j in range(n)] for i in range(n)]
