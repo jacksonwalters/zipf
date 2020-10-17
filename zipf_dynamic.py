@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 
 #number of quantities
 n=1000
-max_quant=100
+max_quant=16
 grid_size=100
 p_ii=10
 
