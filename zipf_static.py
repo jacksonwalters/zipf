@@ -22,7 +22,9 @@ d = [[math.dist(x[i],x[j]) for j in range(n)] for i in range(n)]
 
 #transition probabilities are given by p_ij = 1/d_ij where d_ij
 #is the distance from node i to node j.
-P = [[(1/math.dist(x[i],x[j]) if i != j else p_ii) for j in range(n)] for i in range(n)]
+def p(i,j):
+    return 1/math.dist(x[i],x[j]) if i != j else p_ii
+P = [[p(i,j) for j in range(n)] for i in range(n)]
 row_sum = [sum(row) for row in P]
 #normalize so that row sums (outgoing) are 1
 P = np.array([[P[i][j]/row_sum[i] for j in range(n)] for i in range(n)])
@@ -34,12 +36,10 @@ for row in P:
 eig_val, eig_vec = np.linalg.eig(P)
 pi = eig_vec[0]/sum(eig_vec[0])
 
-#for cont. case, subtract 1 from diagonal to get zero row sum
-#A is stochastic matrix
-A = P - np.identity(n)
-
-#to solve, simply exponentiate the matrix
+#for cont. case, subtract 1 from diagonal to stochastic matrix A
+#exponentiate to obtain solution
 def Q(t):
+    A = P - np.identity(n)
     return np.matmul(q[0],expm(t*A))
 
 #sort list in ascending order to get rank-freq. dist

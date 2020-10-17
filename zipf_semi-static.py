@@ -31,6 +31,9 @@ def P(t):
     #normalize so that row sums (outgoing) are 1
     row_sum = [sum(row) for row in P_t]
     P_t = np.array([[P_t[i][j]/row_sum[i] for j in range(n)] for i in range(n)])
+    #make sure row sums are 1 within numerical error
+    for row in P_t:
+        assert(sum(row) - 1 < 10**-9)
     return P_t
 
 #to solve (for now) multiply matrices
@@ -55,15 +58,11 @@ def Q(t):
         return q[t]
 
 #sort list in ascending order to get rank-freq. dist
-quantities=list(Q(10))
-quantities.sort()
-quantities.reverse()
+quantities=sorted(list(Q(10))).reverse()
 plt.plot(quantities)
 
 #plot the initial distribution for reference
-init=list(q[0])
-init.sort()
-init.reverse()
+init=sorted(list(q[0])).reverse()
 plt.plot(init)
 
 plt.show()

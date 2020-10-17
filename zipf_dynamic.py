@@ -1,4 +1,4 @@
-#SEMI-STATIC CASE
+#DYNAMIC CASE
 #p_ij = boole(Q_j - Q_i > 0)/d_ij
 #meaning transitions from i->j only when population at Q_j exceeds Q_i
 #starting with slow solution - updating transition matrix each time
@@ -15,7 +15,6 @@ max_quant=100
 grid_size=100
 p_ii=10
 
-
 #inital quantities as integers
 q = [np.array([random.randint(0,max_quant) for i in range(n)])]
 
@@ -27,7 +26,7 @@ d = [[math.dist(x[i],x[j]) for j in range(n)] for i in range(n)]
 #is the distance from node i to node j.
 def p(i,j,t):
     #diagonal element p_ii determines proportion of quantity "held"
-    return (q[t][i]-q[t][j])/math.dist(x[i],x[j]) if i != j else p_ii
+    return abs(q[t][i]-q[t][j])/math.dist(x[i],x[j]) if i != j else p_ii
 def P(t):
     #probabilities at time t
     P_t = [[p(i,j,t) for j in range(n)] for i in range(n)]
@@ -58,15 +57,11 @@ def Q(t):
         return q[t]
 
 #sort list in ascending order to get rank-freq. dist
-quantities=list(Q(10))
-quantities.sort()
-quantities.reverse()
+quantities=sorted(list(Q(10))).reverse()
 plt.plot(quantities)
 
 #plot the initial distribution for reference
-init=list(q[0])
-init.sort()
-init.reverse()
+init=sorted(list(q[0])).reverse()
 plt.plot(init)
 
 plt.show()
