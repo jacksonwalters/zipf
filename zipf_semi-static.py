@@ -10,10 +10,10 @@ import random
 import matplotlib.pyplot as plt
 
 #number of quantities
-n=5
+n=1000
 
 #inital quantities as integers
-q = [np.array([random.randint(0,1000) for i in range(n)])]
+q = [np.array([random.randint(0,100) for i in range(n)])]
 
 #generate random 2d locations for cities and compute distances
 x = [(100*random.random(),100*random.random()) for i in range(n)]
@@ -22,7 +22,8 @@ d = [[math.dist(x[i],x[j]) for j in range(n)] for i in range(n)]
 #transition probabilities are given by p_ij = 1/d_ij where d_ij
 #is the distance from node i to node j.
 def p(i,j,t):
-    return bool(q[t][i]-q[t][j] < 0)/math.dist(x[i],x[j]) if i != j else 1
+    #diagonal element p_ii determines proportion of quantity "held"
+    return bool(q[t][i]-q[t][j] < 0)/math.dist(x[i],x[j]) if i != j else 10
 def P(t):
     #probabilities at time t
     P_t = [[p(i,j,t) for j in range(n)] for i in range(n)]
@@ -48,3 +49,21 @@ def Q(t):
         q_t = np.matmul(Q(t-1),P(t-1))
         q.append(q_t)
         return q[t]
+    #if already computed, just return it
+    if t < len(q):
+        return q[t]
+
+#sort list in ascending order to get rank-freq. dist
+quantities=list(Q(10))
+quantities.sort()
+quantities.reverse()
+plt.plot(quantities)
+
+#plot the initial distribution for reference
+init=list(q[0])
+init.sort()
+init.reverse()
+plt.plot(init)
+
+plt.show()
+plt.clf()
