@@ -114,4 +114,4 @@ Same solution as static case, but piecewise whenever P changes.
 
 DYNAMIC, CONTINUOUS:
 
-Equations for Q_i(t) become quadratic differential equations.
+Equations for Q_i(t) become a Lotka-Volterra type system of quadratic ODEs. 
