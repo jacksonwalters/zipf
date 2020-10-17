@@ -47,8 +47,8 @@ init.sort(reverse=True)
 plt.plot(init)
 
 #plot at t=5
-init=list(Q(5))
-init.sort(reverse=True)
+quantities=list(Q(5))
+quantities.sort(reverse=True)
 plt.plot(init)
 
 #sort list in ascending order to get rank-freq. dist

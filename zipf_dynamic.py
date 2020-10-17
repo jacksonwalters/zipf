@@ -62,8 +62,8 @@ init.sort(reverse=True)
 plt.plot(init)
 
 #plot the initial distribution for reference
-init=list(Q(5))
-init.sort(reverse=True)
+quantities=list(Q(5))
+quantities.sort(reverse=True)
 plt.plot(init)
 
 #sort list in ascending order to get rank-freq. dist

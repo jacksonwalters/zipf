@@ -10,7 +10,7 @@ import random
 import matplotlib.pyplot as plt
 
 n=1000  #number of quantities
-max_quant=100   #maximum quantity
+max_quant=3   #maximum quantity
 grid_size=100   #max x,y in location grid/map
 p_ii = 10   #diagonal determines proportion of quantity "held"
 
@@ -63,8 +63,8 @@ init.sort(reverse=True)
 plt.plot(init)
 
 #plot the initial distribution for reference
-init=list(Q(5))
-init.sort(reverse=True)
+quantities=list(Q(5))
+quantities.sort(reverse=True)
 plt.plot(init)
 
 #sort list in ascending order to get rank-freq. dist
