@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 n=1000
 max_quant=1000
 grid_size=100
-p_ii=0
+p_ii=1
 
 #inital quantities as integers
 q = [np.array([random.randint(0,max_quant) for i in range(n)])]
@@ -47,7 +47,7 @@ init.sort(reverse=True)
 plt.plot(init)
 
 #plot at t=5
-quantities=list(Q(5))
+quantities=list(Q(2))
 quantities.sort(reverse=True)
 plt.plot(quantities)
 

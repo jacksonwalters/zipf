@@ -10,9 +10,9 @@ import random
 import matplotlib.pyplot as plt
 
 n=1000  #number of quantities
-max_quant=3   #maximum quantity
+max_quant=100000   #maximum quantity
 grid_size=100   #max x,y in location grid/map
-p_ii = 10   #diagonal determines proportion of quantity "held"
+p_ii = 100   #diagonal determines proportion of quantity "held"
 
 #inital quantities as integers
 q = [np.array([random.randint(0,max_quant) for i in range(n)])]
